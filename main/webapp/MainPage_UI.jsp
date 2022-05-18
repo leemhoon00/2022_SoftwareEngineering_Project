@@ -105,7 +105,7 @@
   padding-left: 220px;
 }
 #pframe{
-		width: 95%;
+		width: 100%;
 		height: 95vh;
 		overflow: scroll;
 	}
@@ -120,12 +120,12 @@
   <ul class="sidebar-navigation">
     <li class="header"></li>
     <li>
-      <a onclick="clickmain()">
+      <a onclick="ProductButtonEvent()">
         <i class="fa fa-home" aria-hidden="true"></i> 메인화면
       </a>
     </li>
     <li>
-      <a>
+      <a onclick="MyInformationButtonEvent()">
         <i class="fa fa-tachometer" aria-hidden="true"></i> 내정보보기
       </a>
     </li>
@@ -136,9 +136,17 @@
 
   <div class="container-fluid">
 
-   <iframe id="pframe" src="main/main.jsp" frameborder="0px"></iframe>
+   <iframe id="pframe" src="aboutProduct/Product_Search_UI.jsp" frameborder="0px"></iframe>
 
   </div>
 </div>
+<script>
+function ProductButtonEvent(){
+	document.getElementById("pframe").src="aboutProduct/Product_Search_UI.jsp";
+}
+function MyInformationButtonEvent(){
+	document.getElementById("pframe").src="aboutInformation/My_Information_UI.jsp";
+}
+</script>
 </body>
 </html>

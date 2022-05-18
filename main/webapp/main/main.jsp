@@ -5,7 +5,7 @@
 <%@ page import="java.sql.Statement"%>
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="java.sql.SQLException"%>
-<%@ page import="dbcon.dbcon" %>
+<%@ page import="control.dbcon" %>
 
 
 <!DOCTYPE html>

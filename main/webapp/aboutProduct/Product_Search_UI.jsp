@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>로그인 페이지</title>
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <link
@@ -19,23 +18,33 @@
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous">
     </script>
-	
-	<link href="index.css" rel="stylesheet">
-	
+<link rel="stylesheet" href="../jh.css">
+
+<title>Insert title here</title>
 </head>
-<body class="text-center">
-	<form class="form-signin" action="mainpage.jsp" method="post">
-		<div class="form-floating">
-		    <input type="text" class="form-control" name="id" placeholder="ID">
-            <label for="floatingInput">ID</label>
-        </div>
-		<div class="form-floating">
-            <input type="password" class="form-control" name="pw" placeholder="Password">
-            <label for="floatingPassword">Password</label>
-        </div>
-		<button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
-		<a href="#" onclick="window.open('signup/signup.jsp','_blank','width=600 height=600')" class="float-right">회원가입</a>
-		
-	</form>
+<body>
+<div class="card">
+	<div class="card-body">
+		<div class="form-inline">
+			<select>
+				<option value="제목">제목</option>
+				<option value="작성자">작성자</option>
+			</select>
+			<label>검색:</label> <input type="text">
+		</div>
+	</div>
+</div>
+<div id="Product_List_UI"></div>
+<script>
+$.ajax({
+    type:"GET",
+       url:"./Product_List_UI.jsp",
+       data:{},
+       dataType:"html",
+       success:function(data){
+           $("#Product_List_UI").html(data);
+     }
+  });
+</script>
 </body>
 </html>
