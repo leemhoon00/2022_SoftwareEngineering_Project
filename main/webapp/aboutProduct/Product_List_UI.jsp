@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="entity.Product" %>
+<%@ page import="control.Product_Search" %>
+<%
+String category = request.getParameter("category");
+String content = request.getParameter("content");
+
+Product_Search control = new Product_Search();
+List<Product> list;
+
+if(content == null || content.equals("")){
+	list = control.getAllList();
+}
+else{
+	list = control.getSearchedList(category, content);
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +39,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+<script>
 
+var selectedTable='0';
+</script>
 <div class="row">
 	<div class="col-6" style="margin-right: 0px;">
 		<div class="card" style="margin-right: 0px;">
@@ -38,21 +58,53 @@
 						</tr>
 					</thead>
 					<tbody style="border-top: none;">
-						<tr>
-							<td>에어팟팔아요</td>
-							<td>2022-05-18</td>
+						
+						<%for(Product p: list){ %>
+						
+						<tr class="trs" id="<%=p.getNumber() %>" onclick="TableClickEvent(this)">
+							<td style="display:none"><%=p.getNumber() %></td>
+							<td><%=p.getTitle() %></td>
+							<td><%=p.getDate() %></td>
 						</tr>
-						<tr>
-							<td>버즈팔아요</td>
-							<td>2022-05-18</td>
-						</tr>
+						
+						<%} %>
 					</tbody>
 				</table>
 				<script>
+				function TableClickEvent(element){
+					var trs = document.querySelectorAll(".trs");
+					
+					if(selectedTable == '0'){
+						selectedTable = element.children[0].innerHTML;
+						element.style.backgroundColor="lightgray";
+					}
+					else if(selectedTable != element.children[0].innerHTML){
+						document.getElementById(selectedTable).style.backgroundColor="white";
+						element.style.backgroundColor="lightgray";
+						
+						selectedTable = element.children[0].innerHTML;
+						
+					}
+					else{
+						selectedTable = '0';
+						element.style.backgroundColor="white";
+					}
+					
+					$.ajax({
+						type:"GET",
+				        url:"./Product_Content_UI.jsp",
+				        data:{selectedTable : selectedTable},
+				        dataType:"html",
+				        success:function(data){
+				            $("#Product_Content_UI").html(data);
+				      }
+				   });
+				}
+				
 				$.ajax({
 					type:"GET",
 			        url:"./Product_Content_UI.jsp",
-			        data:{},
+			        data:{selectedTable : '0'},
 			        dataType:"html",
 			        success:function(data){
 			            $("#Product_Content_UI").html(data);

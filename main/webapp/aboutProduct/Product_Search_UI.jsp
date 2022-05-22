@@ -26,14 +26,15 @@
 <div class="card">
 	<div class="card-body">
 		<div class="form-inline">
-			<select>
+			<select id="Search_Category" class="form-select search">
 				<option value="제목">제목</option>
-				<option value="작성자">작성자</option>
+				<option value="판매자">판매자</option>
 			</select>
-			<label>검색:</label> <input type="text">
+			<label>검색:</label> <input type="text" class="form-control search" onKeypress="javascript:if(event.keyCode==13) {Search_Textbox_onChangeEvent(this)}">
 		</div>
 	</div>
 </div>
+
 <div id="Product_List_UI"></div>
 <script>
 $.ajax({
@@ -45,6 +46,21 @@ $.ajax({
            $("#Product_List_UI").html(data);
      }
   });
+  
+function Search_Textbox_onChangeEvent(element){
+	var Search_Category = document.getElementById("Search_Category").value;
+	var Search_Content = element.value;
+	
+	$.ajax({
+	    type:"GET",
+	       url:"./Product_List_UI.jsp",
+	       data:{category : Search_Category, content : Search_Content},
+	       dataType:"html",
+	       success:function(data){
+	           $("#Product_List_UI").html(data);
+	     }
+	  });
+}
 </script>
 </body>
 </html>

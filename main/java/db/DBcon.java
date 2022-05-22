@@ -1,8 +1,11 @@
-package control;
+package db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-public class dbcon {
+public class DBcon {
 	
 	private Connection conn = null;
 	private Statement stmt = null;
@@ -10,11 +13,11 @@ public class dbcon {
 	private String query= null;
 	
 	
-	public dbcon(){
+	public DBcon(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			String jdbcDriver = "jdbc:mysql://192.168.0.115:3306/team?" + "useUnicode=true&characterEncoding=utf8";
-			String dbUser = "Usera";
+			String jdbcDriver = "jdbc:mysql://localhost:3306/se?" + "useUnicode=true&characterEncoding=utf8";
+			String dbUser = "usera";
 			String dbPass = "1234";
 			conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 			stmt = conn.createStatement();
@@ -26,7 +29,9 @@ public class dbcon {
 	
 	public void close() {
 		try {
-			rs.close();
+			if(rs != null) {
+				rs.close();
+			}
 			stmt.close();
 			conn.close();
 		}
@@ -42,7 +47,17 @@ public class dbcon {
 	public ResultSet getRS() {
 		try {
 			rs=stmt.executeQuery(query);
-		}catch(Exception e) {}
+		}catch(Exception e) {e.printStackTrace();}
 		return rs;
+	}
+	
+	public Boolean Execute() {
+		try {
+			stmt.executeUpdate(query);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 }

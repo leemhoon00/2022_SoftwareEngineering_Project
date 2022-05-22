@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="entity.Product" %>
+<%@ page import="control.Product_Information" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +24,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<%
+String id = (String)session.getAttribute("id");
+int productNumber = Integer.parseInt(request.getParameter("selectedTable"));
+
+Product_Information control = new Product_Information();
+Product p = control.getProductInformation(id, productNumber);
+
+%>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	 <div class="modal-dialog" style="max-width: 100%; width: auto; display: table;">
@@ -46,8 +57,8 @@ function modalbutton(){
 </script>
 <div class="card">
 	<div class="card-header"
-		style="font-size: 20px; background-color: white;">판매자 : <button type="button" class="btn btn-info" data-bs-toggle="modal" onclick="modalbutton()" data-bs-target="#exampleModal">
-			  임시아이디1
+		style="font-size: 20px; background-color: white;">판매자 : <button style='<%=p.getSeller_button()?"":"display:none" %>' type="button" class="btn btn-info" data-bs-toggle="modal" onclick="modalbutton(this)" data-bs-target="#exampleModal" value="<%=p.getSeller()%>">
+			  <%=p.getSeller() %>
 			</button></div>
 	<div class="card-body">
 		<form>
@@ -56,7 +67,7 @@ function modalbutton(){
 					<label>제목</label>
 				</div>
 				<div class="col-12">
-					<input type="text" class="form-control" value="에어팟팔아요">
+					<input type="text" class="form-control" value="<%=p.getTitle() %>" name="title">
 				</div>
 				<div class="col-6">
 					<label>날짜</label>
@@ -65,27 +76,29 @@ function modalbutton(){
 					<label>가격</label>
 				</div>
 				<div class="col-6">
-					<input type="text" class="form-control" value="2022-05-19">
+					<input type="text" class="form-control" value="<%=p.getDate() %>" disabled>
 				</div>
 				<div class="col-6">
-					<input type="text" class="form-control" value="50,000원">
+					<input type="text" class="form-control" value="<%=p.getPrice() %>" name="price">
 				</div>
 				<div class="col-12">
 					<label>설명</label>
 				</div>
 				<div class="col-12">
 					<p>
-						<textarea class="form-control" rows="5">미개봉 중고</textarea>
+						<textarea name="content" class="form-control" rows="5"><%=p.getContent() %></textarea>
 					</p>
 				</div>
 				
+				<input style="display:none" name="number" value="<%=p.getNumber()%>">
+				
 				<div class="col-12">
-					<button class="btn btn-danger float-right">삭제</button>
-					<button class="btn btn-info float-right" style="margin-right: 5px;">수정</button>
-					<button class="btn btn-info float-right" style="margin-right: 5px;">등록</button>
-					<button class="btn btn-info float-right" style="margin-right: 5px;">거래요청</button>
-					<button class="btn btn-info float-right" style="margin-right: 5px;">거래취소</button>
-					<button class="btn btn-info float-right" style="margin-right: 5px;">거래확정</button>
+					<button style='<%=p.getDelete_button()?"":"display:none" %>' class="btn btn-danger float-right" type="submit" formaction="delete.jsp" formmethod="post">삭제</button>
+					<button style='<%=p.getUpdate_button()?"":"display:none" %>' class="btn btn-info float-right" style="margin-right: 5px;" type="submit" formaction="update.jsp" formmethod="post">수정</button>
+					<button style='<%=p.getInsert_button()?"":"display:none" %>' class="btn btn-info float-right" style="margin-right: 5px;" type="submit" formaction="insert.jsp" formmethod="post">등록</button>
+					<button style='<%=p.getRequest_button()?"":"display:none" %>' class="btn btn-info float-right" style="margin-right: 5px;" type="submit" formaction="request.jsp" formmethod="post">거래요청</button>
+					<button style='<%=p.getCancel_button()?"":"display:none" %>' class="btn btn-info float-right" style="margin-right: 5px;" type="submit" formaction="cancel.jsp" formmethod="post">거래취소</button>
+					<button style='<%=p.getConfirm_button()?"":"display:none" %>' class="btn btn-info float-right" style="margin-right: 5px;" type="submit" formaction="confirm.jsp" formmethod="post">거래확정</button>
 					
 				</div>
 			</div>

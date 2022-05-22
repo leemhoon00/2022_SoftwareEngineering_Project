@@ -33,8 +33,8 @@
             <input type="password" class="form-control" name="pw" placeholder="Password">
             <label for="floatingPassword">Password</label>
         </div>
-		<button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
-		<a href="#" onclick="window.open('signup/signup.jsp','_blank','width=600 height=600')" class="float-right">회원가입</a>
+		<button class="w-100 btn btn-lg btn-primary" type="submit" formaction="MainPage_UI.jsp" formmethod="post">로그인</button>
+		<a href="#" onclick="window.open('Signup/Signup_UI.jsp','_blank','width=600 height=600')" class="float-right">회원가입</a>
 		
 	</form>
 </body>

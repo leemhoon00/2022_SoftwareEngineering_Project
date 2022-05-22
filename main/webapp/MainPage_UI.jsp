@@ -1,10 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="control.Login"%>
+<%
+String id = request.getParameter("id");
+String pw = request.getParameter("pw");
+
+if(id == null || id.equals("") || pw == null || pw.equals("")){
+	out.println("<script>alert('아이디와 비밀번호를 입력하세요!');document.location.href='Login_UI.jsp';</script>");
+}
+
+Boolean result = Login.Check_Login(id, pw);
+if(result == false){
+	out.println("<script>alert('아이디와 비밀번호에 해당하는 사용자가 없습니다!');document.location.href='Login_UI.jsp';</script>");
+}
+
+session.setAttribute("id", id);
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>중고 거래 플랫폼</title>
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <link
