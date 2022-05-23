@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="entity.User" %>
+<%@ page import="control.My_Information" %>
+<%@ page import="control.My_Transaction_Record_List" %>
+<%@ page import="java.util.List" %>
+<%@ page import="entity.Transaction_Record" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +28,23 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<%
+My_Information control = new My_Information();
+
+String id = (String)session.getAttribute("id");
+
+User user  = control.getUser(id);
+
+My_Transaction_Record_List control2 = new My_Transaction_Record_List();
+
+List<Transaction_Record> buy_list;
+List<Transaction_Record> sell_list;
+
+buy_list = control2.getBuyRecordList(id);
+sell_list = control2.getSellRecordList(id);
+
+%>
 <label class="title" style="margin-left: 30px; margin-top: 10px;">내정보 보기</label>
 <div class="row">
 	<div class="col-6">
@@ -42,30 +65,27 @@
 							<label>지역</label>
 						</div>
 						<div class="col-4">
-							<input type="text" class="form-control" value="아이디1">
+							<input type="text" class="form-control" value="<%=user.getId()%>">
 						</div>
 						<div class="col-4">
-							<input type="text" class="form-control" value="password1">
+							<input type="text" class="form-control" value="<%=user.getPw()%>">
 						</div>
 						<div class="col-4">
-							<input type="text" class="form-control" value="부산">
+							<input type="text" class="form-control" value="<%=user.getRegion()%>">
 						</div>
-						<div class="col-6">
+						<div class="col-4">
 							<label>이름</label>
 						</div>
 						<div class="col-4">
 							<label>전화번호</label>
 						</div>
 						<div class="col-4">
-							<input type="text" class="form-control" value="이름1">
+							<input type="text" class="form-control" value="<%=user.getName()%>">
 						</div>
 						<div class="col-4">
-							<input type="text" class="form-control" value="010-1234-5678">
+							<input type="text" class="form-control" value="<%=user.getPhoneNumber()%>">
 						</div>
 						
-						<div class="col-12">
-							<button class="btn btn-info float-right" style="margin-right: 5px;">수정</button>
-						</div>
 					</div>
 				</form>
 			</div>
@@ -75,7 +95,7 @@
 	<div class="col-6">
 		<div class="card">
 			<div class="card-header" style="font-size: 20px; background-color: white;">
-				내 구매기록 기록
+				내 구매기록
 			</div>
 			<div class="card-body">
 				<table id="mytable" class="table table-bordered" style="width: 100%;"
@@ -87,10 +107,17 @@
 						</tr>
 					</thead>
 					<tbody style="border-top: none;">
-						<tr onclick="BuyRecordTableClickEvent()" data-bs-toggle="modal" data-bs-target="#exampleModal">
-							<td>에어팟팔아요</td>
-							<td>2022-05-18</td>
+					
+						<%for(Transaction_Record p: buy_list){ %>
+						
+						<tr onclick="BuyRecordTableClickEvent(this)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+							<td style="display:none"><%=p.getNumber() %></td>
+							<td><%=p.getTitle() %></td>
+							<td><%=p.getRegdate() %></td>
 						</tr>
+						
+						<%} %>
+						
 						
 					</tbody>
 				</table>
@@ -98,7 +125,7 @@
 		</div>
 		<div class="card">
 			<div class="card-header" style="font-size: 20px; background-color: white;">
-				내 판매기록 기록
+				내 판매기록
 			</div>
 			<div class="card-body">
 				<table id="mytable" class="table table-bordered" style="width: 100%;"
@@ -110,10 +137,17 @@
 						</tr>
 					</thead>
 					<tbody style="border-top: none;">
-						<tr onclick="SellRecordTableClickEvent()" data-bs-toggle="modal" data-bs-target="#exampleModal">
-							<td>버즈팔아요</td>
-							<td>2022-05-18</td>
+					
+						<%for(Transaction_Record p: sell_list){ %>
+						
+						<tr onclick="SellRecordTableClickEvent(this)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+							<td style="display:none"><%=p.getNumber() %></td>
+							<td><%=p.getTitle() %></td>
+							<td><%=p.getRegdate() %></td>
 						</tr>
+						
+						<%} %>
+					
 					</tbody>
 				</table>
 			</div>
@@ -121,11 +155,14 @@
 	</div>
 </div>
 <script>
-function BuyRecordTableClickEvent(){
+function BuyRecordTableClickEvent(element){
+	
+	var number = element.children[0].innerHTML;
+	
 	$.ajax({
 		type:"GET",
         url:"./Buy_Record_UI.jsp",
-        data:{},
+        data:{number : number},
         dataType:"html",
         success:function(data){
             $("#modaldiv").html(data);
@@ -133,11 +170,14 @@ function BuyRecordTableClickEvent(){
    });
 }
 
-function SellRecordTableClickEvent(){
+function SellRecordTableClickEvent(element){
+	
+	var number = element.children[0].innerHTML;
+	
 	$.ajax({
 		type:"GET",
         url:"./Sell_Record_UI.jsp",
-        data:{},
+        data:{number : number},
         dataType:"html",
         success:function(data){
             $("#modaldiv").html(data);

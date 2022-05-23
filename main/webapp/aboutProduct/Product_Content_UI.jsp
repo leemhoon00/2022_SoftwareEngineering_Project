@@ -43,11 +43,12 @@ Product p = control.getProductInformation(id, productNumber);
 </div>
 
 <script>
-function modalbutton(){
+function modalbutton(element){
+	
 	$.ajax({
 		type:"GET",
         url:"./Seller_Information_UI.jsp",
-        data:{},
+        data:{seller : element.value},
         dataType:"html",
         success:function(data){
             $("#modaldiv").html(data);

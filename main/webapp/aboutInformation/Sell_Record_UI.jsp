@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="entity.Transaction_Record" %>
+<%@ page import="control.Show_Transaction_Record" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,54 +25,72 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<%
+
+String temp = (String)request.getParameter("number");
+int number = Integer.parseInt(temp);
+
+Show_Transaction_Record control = new Show_Transaction_Record();
+
+Transaction_Record p = control.get_Transaction_Record(number);
+
+%>
+
 <div class="modal-header">
 	<h5 class="modal-title" id="exampleModalLabel">판매기록 조회</h5>
 	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body" style="padding:1px">
 	<div class="row" style="width:1000px; margin:0;">
-		<div class="col-4">
+		<div class="col-6">
 			<label>구매자</label>
 		</div>
-		<div class="col-4">
+		<div class="col-6">
 			<label>가격</label>
 		</div>
-		<div class="col-4">
-			<label>점수</label>
+		
+		<div class="col-6">
+			<input type="text" class="form-control" value="<%=p.getBuyer() %>" disabled>
 		</div>
-		<div class="col-4">
-			<input type="text" class="form-control" value="구매자1">
+		<div class="col-6">
+			<input type="text" class="form-control" value="<%=p.getPrice() %>" disabled>
 		</div>
-		<div class="col-4">
-			<input type="text" class="form-control" value="50,000">
-		</div>
-		<div class="col-4">
-			<input type="text" class="form-control" value="5">
-		</div>
-		<div class="col-12">
-			<label>후기</label>
-		</div>
-		<div class="col-12">
-			<input type="text" class="form-control" value="사기꾼이에요">
-		</div>
+		
 		<div class="col-12">
 			<label>제목</label>
 		</div>
 		<div class="col-12">
-			<input type="text" class="form-control" value="버즈팔아요">
+			<input type="text" class="form-control" value="<%=p.getTitle() %>" disabled>
 		</div>
+		
 		<div class="col-12">
-			<label>내용</label>
+			<label">내용</label>
 		</div>
 		<div class="col-12">
 			<p>
-				<textarea class="form-control" rows="5">미개봉 중고</textarea>
+				<textarea class="form-control" rows="5" disabled><%=p.getP_content() %></textarea>
 			</p>
+		</div>
+		
+		
+		<div class="col-10">
+			<label>후기 작성</label>
+		</div>
+		<div class="col-2">
+			<label>점수</label>
+		</div>
+		<div class="col-10">
+			<input type="text" class="form-control" id="content" value="<%=p.getContent()%>">
+		</div>
+		<div class="col-2">
+			<input type="text" class="form-control" id="score" value='<%=p.getScore()==-1?"":p.getScore()%>'>
 		</div>
 	</div>
 	<div class="modal-footer" style="margin:5px;">
 		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
 	</div>
+	
 </div>
 </body>
 </html>

@@ -205,11 +205,12 @@ public class Product_Control {
 					p.setTitle(rs.getString("title"));
 					p.setBuyer(rs.getString("buyer"));
 					p.setContent(rs.getString("content"));
+					p.setPrice(rs.getInt("price"));
 					
 					sql = "delete from product where number="+p.getNumber();
 					temp = stmt.executeUpdate(sql);
 					
-					sql = "insert into review (number,seller,title,buyer,p_content) values("+p.getNumber()+",'"+p.getSeller()+"','"+p.getTitle()+"','"+p.getBuyer()+"','"+p.getContent()+"')";
+					sql = "insert into review (number,seller,title,buyer,p_content,price) values("+p.getNumber()+",'"+p.getSeller()+"','"+p.getTitle()+"','"+p.getBuyer()+"','"+p.getContent()+"',"+p.getPrice()+")";
 					temp = stmt.executeUpdate(sql);
 				}
 			}

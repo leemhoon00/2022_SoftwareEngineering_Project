@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="entity.Transaction_Record" %>
+<%@ page import="control.Show_Transaction_Record" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +25,23 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<%
+
+String temp = (String)request.getParameter("number");
+int number = Integer.parseInt(temp);
+
+Show_Transaction_Record control = new Show_Transaction_Record();
+
+Transaction_Record p = control.get_Transaction_Record(number);
+
+%>
+
+<script>
+var number = '<%=number%>';
+</script>
+
+
 <div class="modal-header">
 	<h5 class="modal-title" id="exampleModalLabel">구매기록 조회</h5>
 	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -36,17 +56,17 @@
 		</div>
 		
 		<div class="col-6">
-			<input type="text" class="form-control" value="판매자1" disabled>
+			<input type="text" class="form-control" value="<%=p.getSeller() %>" disabled>
 		</div>
 		<div class="col-6">
-			<input type="text" class="form-control" value="50,000" disabled>
+			<input type="text" class="form-control" value="<%=p.getPrice() %>" disabled>
 		</div>
 		
 		<div class="col-12">
 			<label>제목</label>
 		</div>
 		<div class="col-12">
-			<input type="text" class="form-control" value="에어팟팔아요" disabled>
+			<input type="text" class="form-control" value="<%=p.getTitle() %>" disabled>
 		</div>
 		
 		<div class="col-12">
@@ -54,7 +74,7 @@
 		</div>
 		<div class="col-12">
 			<p>
-				<textarea class="form-control" rows="5" disabled>미개봉 중고</textarea>
+				<textarea class="form-control" rows="5" disabled><%=p.getP_content() %></textarea>
 			</p>
 		</div>
 		
@@ -66,16 +86,32 @@
 			<label>점수</label>
 		</div>
 		<div class="col-10">
-			<input type="text" class="form-control">
+			<input type="text" class="form-control" id="content" value="<%=p.getContent()%>">
 		</div>
 		<div class="col-2">
-			<input type="text" class="form-control">
+			<input type="text" class="form-control" id="score" value='<%=p.getScore()==-1?"":p.getScore()%>'>
 		</div>
 	</div>
 	<div class="modal-footer" style="margin:5px;">
-		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">저장</button>
+		<button <%=p.getStatus().equals("0")?"":"style='display:none'" %>type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="SaveButtonEvent()">저장</button>
 		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
 	</div>
+	<script>
+	function SaveButtonEvent(){
+		var content = document.getElementById("content").value;
+		var score = document.getElementById("score").value;
+		
+		$.ajax({
+			type:"GET",
+	        url:"./save.jsp",
+	        data:{content : content, score : score, number:number},
+	        dataType:"html",
+	        success:function(data){
+	            
+	      }
+	   });
+	}
+	</script>
 </div>
 </body>
 </html>

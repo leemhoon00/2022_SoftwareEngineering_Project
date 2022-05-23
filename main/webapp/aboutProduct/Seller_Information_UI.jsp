@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="entity.Transaction_Record" %>
+<%@ page import="control.Show_Seller" %>
+<%@ page import="entity.User" %>
+<%@ page import="java.util.List" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,12 +28,41 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<%
+String seller = request.getParameter("seller");
+User user = new User(seller);
+Show_Seller control = new Show_Seller();
+user = control.Select_Seller(user);
+
+List<Transaction_Record> list;
+
+list = control.getList(user);
+
+int sum=0;
+int count=0;
+double avg=0;
+
+for(Transaction_Record p: list){
+	sum += p.getScore();
+	count++;
+}
+
+if(count==0){
+	
+}
+else{
+	avg = (double)sum / (double)count;
+	avg = Math.floor(avg);
+}
+
+%>
 <div class="modal-header">
 	<h5 class="modal-title" id="exampleModalLabel">판매자정보</h5>
 	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body" style="padding:1px">
-	<div class="row" style="width:650px">
+	<div class="row" style="width:650px; margin:0;">
 		<div class="col-6">
 			<label style="margin:10px;">아이디</label>
 		</div>
@@ -35,25 +70,38 @@
 			<label style="margin:10px;">점수</label>
 		</div>
 		<div class="col-6">
-			<input type="text" style="margin:10px; width:95%;" class="form-control" value="임시아이디1">
+			<input type="text" class="form-control" value="<%=user.getId()%>">
 		</div>
 		<div class="col-6">
-			<input type="text" style="margin:10px; width:95%;" class="form-control" value="88">
+			<input type="text" class="form-control" value="<%=avg%>">
 		</div>
-		<div class="col-12">
-			<table class="table table-bordered" style="width: 100%;" role="grid">
+		
+		<div class="col-6">
+			<label style="margin:10px;">지역</label>
+		</div>
+		<div class="col-6">
+			<label style="margin:10px;">전화번호</label>
+		</div>
+		<div class="col-6">
+			<input type="text" class="form-control" value="<%=user.getRegion()%>">
+		</div>
+		<div class="col-6">
+			<input type="text" class="form-control" value="<%=user.getPhoneNumber()%>">
+		</div>
+		<div class="col-12" style="margin-top: 10px;">
+			<table class="table table-bordered" role="grid">
 				<thead>
 					<tr>
 						<th>후기</th>
 					</tr>
 				</thead>
 				<tbody style="border-top: none;">
+				
+					<%for(Transaction_Record p: list) {%>
 					<tr>
-						<td>착해요</td>
+						<td><%=p.getContent() %></td>
 					</tr>
-					<tr>
-						<td>사기꾼이네요</td>
-					</tr>
+					<%} %>
 				</tbody>
 			</table>
 		</div>
