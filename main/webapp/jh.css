@@ -76,27 +76,8 @@ thead {
 	width: 10%;
 	display: inline;
 }
-.completegreenbox{
-	background:rgb(214, 233, 198);
-	width:30px;
-	height:40px;
-}
-.warningredbox, .warningboxexp, .completegreenbox, .completegreenexp{
-    border-radius: 5px;
-    box-shadow: 3px 3px 3px rgb(0 0 0 / 5%);
-}
 
-.warningredbox{
-    background:rgb(227, 183, 190);
-    width:30px;
-    height:40px;
-}
-.complete{
-	color:green;
-}
-.notcomplete{
-	color:red;
-}
+
 .page-item.active .page-link {
     z-index: 3;
     color: #fff;

@@ -21,6 +21,8 @@ public class Product_Search {
 		DBconn();
 	}
 	
+	
+	// 모든 상품 검색
 	public List<Product> getAllList(){
 		
 		List<Product> list = new ArrayList<Product>();
@@ -53,6 +55,7 @@ public class Product_Search {
 		return list;
 	}
 	
+	// 상품 검색
 	public List<Product> getSearchedList(String category, String content){
 		List<Product> list = new ArrayList<Product>();
 		

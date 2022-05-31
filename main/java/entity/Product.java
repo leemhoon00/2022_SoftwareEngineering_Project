@@ -9,7 +9,6 @@ public class Product {
 	private String date;
 	private String content;
 	
-	//이건 혹시몰라서
 	private String buyer;
 	private String status;
 	private Boolean buy_confirm;

@@ -79,13 +79,14 @@ sell_list = control2.getSellRecordList(id);
 						<div class="col-4">
 							<label>전화번호</label>
 						</div>
+						<div class="col-4"></div>
 						<div class="col-4">
 							<input type="text" class="form-control" value="<%=user.getName()%>">
 						</div>
 						<div class="col-4">
 							<input type="text" class="form-control" value="<%=user.getPhoneNumber()%>">
 						</div>
-						
+						<div class="col-4"></div>
 					</div>
 				</form>
 			</div>

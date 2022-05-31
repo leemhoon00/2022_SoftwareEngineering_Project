@@ -13,10 +13,17 @@
 <%
 String content = (String)request.getParameter("content");
 String temp = (String)request.getParameter("score");
-int score = Integer.parseInt(temp);
+if(content==null || content.equals("") || temp==null || temp.equals("")){
+	out.println("<script>alert('필수란을 입력해주세요!');history.back();</script>");
+}
 
+int score = Integer.parseInt(temp);
+if(score<0 || score>100){
+	out.println("<script>alert('0<=점수<=100');history.back();</script>");
+}
 temp = (String)request.getParameter("number");
 int number = Integer.parseInt(temp);
+
 
 Transaction_Record p = new Transaction_Record();
 p.setNumber(number);

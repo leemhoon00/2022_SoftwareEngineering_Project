@@ -51,6 +51,7 @@ for(Transaction_Record p: list){
 if(count==0){
 	
 }
+// 평균 점수 계산
 else{
 	avg = (double)sum / (double)count;
 	avg = Math.floor(avg);

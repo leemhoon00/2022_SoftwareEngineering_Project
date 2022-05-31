@@ -130,7 +130,7 @@ session.setAttribute("id", id);
 </head>
 <body>
 <div class="sidebar-container">
-  <div class="sidebar-logo">
+  <div class="sidebar-logo" onclick="location.href='Login_UI.jsp'">
     중고거래 플랫폼
   </div>
   <ul class="sidebar-navigation">

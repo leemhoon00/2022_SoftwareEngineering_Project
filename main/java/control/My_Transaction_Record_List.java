@@ -20,7 +20,7 @@ public class My_Transaction_Record_List {
 	
 	
 	
-	
+	// 구매기록
 	public List<Transaction_Record> getBuyRecordList(String id){
 		List<Transaction_Record> list = new ArrayList<Transaction_Record>();
 		

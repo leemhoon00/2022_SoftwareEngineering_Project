@@ -23,6 +23,8 @@ public class Show_Seller {
 		List<Transaction_Record> list = new ArrayList<Transaction_Record>();
 		
 		try {
+			
+			// 리뷰 작성이 완료된 판매기록 조회
 			String sql = "select * from review where seller='"+user.getId()+"' and status ='1'";
 			
 			conn = DriverManager.getConnection(jdbcDriver,dbUser,dbPass);
